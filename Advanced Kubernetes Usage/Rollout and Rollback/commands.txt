@@ -1,0 +1,29 @@
+#deployment
+kubectl apply -f app.yaml --record
+kubectl rollout status deployments kubeserve
+kubectl describe deployment kubeserve
+
+#scale up
+kubectl scale deployment kubeserve --replicas=5
+kubectl get pods
+
+#create service
+kubectl expose deployment kubeserve --port 80 --target-port 80 --type NodePort
+kubectl get services
+curl http://<ip-address-of-the-service>
+
+#view rollout in action
+while true; do curl http://<ip-address-of-the-service>; done
+
+#change image in deployment
+kubectl set image deployments/kubeserve app=linuxacademycontent/kubeserve:v2 --v 6
+
+#view added replicaSet
+kubectl get replicasets
+kubectl get pods
+
+#View rollout history of the deployment
+kubectl rollout history deployment kubeserve 
+
+#Rollback if necessary
+kubectl rollout undo deployment kubeserve --to-revision 1
