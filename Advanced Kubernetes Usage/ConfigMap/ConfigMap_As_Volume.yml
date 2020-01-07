@@ -6,7 +6,7 @@ spec:
   containers:
   - name: app-container
     image: bgruening/busybox-bash
-    command: ['/bin/bash', '-c', 'cd /etc/config ; for file in *; do if [ ! -d "$file" ]; then printf "$file: $(cat "$file")\n"; fi; done']  
+    command: ['/bin/bash', '-c', 'printf "## ConfigMap Files and Values ##\n"; cd /etc/config ; for file in *; do if [ ! -d "$file" ]; then printf "$file: $(cat "$file")\n"; fi; done']  
     volumeMounts:
       - name: configmapvolume
         mountPath: /etc/config
